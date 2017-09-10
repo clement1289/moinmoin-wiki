@@ -11,7 +11,7 @@ Docker image with the Moinmoin wiki engine, uwsgi, nginx.
 
 * run moinmoin wiki engine
 ```
-sudo docker run -it -p 80:80 --name my_wiki clement1289/moinmoin-wiki
+sudo docker run -it -p 80:80 --name my_wiki clement89/moinmoin-wiki:master
 ``` 
 * if the moinmoin data is available at /opt/wiki/pages with uid 1001 owing the files,then
 ```
@@ -32,11 +32,11 @@ tree /opt/wiki/pages
 
 here TCPIP,TaxNotes etc are moinmoin wiki pages
 
-sudo docker run -it -p 80:80 -v /opt/wiki/pages:/usr/local/share/moin/data/pages -e MMUSER=1001 --name my_wiki clement1289/moinmoin-wiki
+sudo docker run -it -p 80:80 -v /opt/wiki/pages:/usr/local/share/moin/data/pages -e MMUSER=1001 --name my_wiki clement89/moinmoin-wiki:master
 ``` 
 * customize wikiconfig.py or moinmoin.conf if you wish
 ```
-sudo docker run -it -p 80:80 --name my_wiki -v /moinmoin-wiki/wikiconfig_customized.py:/usr/local/share/moin/wikiconfig.py clement1289/moinmoin-wiki
+sudo docker run -it -p 80:80 --name my_wiki -v /moinmoin-wiki/wikiconfig_customized.py:/usr/local/share/moin/wikiconfig.py clement89/moinmoin-wiki:master
 ``` 
 
 
