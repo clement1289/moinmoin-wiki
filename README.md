@@ -15,6 +15,7 @@ MM_UID | The UID which owns the wiki pages. Default is 1000
 MM_ADMIN | The moinmoin admin user that will be created. Default is mmAdmin
 MM_EMAIL | MM_ADMIN email address. Default is user@moinmoin.example.org
 MM_VHOST | The nginx virtual host name. Default is moinmoin.example.org.
+MM_PASSWD | password of the MM_ADMIN user. Default is randomly generated. The randomly generated password is printed to stdout and so docker logs should print it
 
 # how to run
 

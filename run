@@ -20,7 +20,7 @@ sed -i "s/MM_VHOST/${MM_VHOST}/g" /etc/nginx/sites-available/moinmoin.conf
 if [ -z "${MM_PASSWD}" ]; then
     MM_PASSWD=$(tr -dc _A-Z-a-z-0-9 < /dev/urandom| head -c15)
 fi
-echo "Setting ${MM_ADMIN} password to ${MM_PASSWD}"
+echo "Setting admin user ${MM_ADMIN}'s password to ${MM_PASSWD}"
 su moinmoin -c "/usr/local/bin/moin --config-dir /usr/local/share/moin account create --name ${MM_ADMIN} --email ${MM_EMAIL} --password ${MM_PASSWD}"
 
 # start service
