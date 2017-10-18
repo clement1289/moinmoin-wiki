@@ -7,6 +7,15 @@ Docker image with the Moinmoin wiki engine, uwsgi, nginx.
 * Forked from https://github.com/olavgg/moinmoin-wiki
 * supports mounting wiki content as volumes with configurable UID for read/write
 
+# Environment Variables
+
+Environment Variable | Description
+-------------------- | ------------
+MM_UID | The UID which owns the wiki pages. Default is 1000
+MM_ADMIN | The moinmoin admin user that will be created. Default is mmAdmin
+MM_EMAIL | MM_ADMIN email address. Default is user@moinmoin.example.org
+MM_VHOST | The nginx virtual host name. Default is moinmoin.example.org.
+
 # how to run
 
 * run moinmoin wiki engine
@@ -32,11 +41,20 @@ tree /opt/wiki/pages
 
 here TCPIP,TaxNotes etc are moinmoin wiki pages
 
-sudo docker run -it -p 80:80 -v /opt/wiki/pages:/usr/local/share/moin/data/pages -e MMUSER=1001 clement89/moinmoin-wiki
+sudo docker run -it -p 80:80 \
+     -v /opt/wiki/pages:/usr/local/share/moin/data/pages \
+     -e MMUSER=1001 \
+     clement89/moinmoin-wiki
 ``` 
-* customize wikiconfig.py or moinmoin.conf if you wish
+* Override any default environment variables
 ```
-sudo docker run -it -p 80:80 -v /moinmoin-wiki/wikiconfig_customized.py:/usr/local/share/moin/wikiconfig.py clement89/moinmoin-wiki
+sudo docker run -it -p 80:80 \
+     -v /opt/wiki/pages:/usr/local/share/moin/data/pages \
+     -e MMUSER=1001 \
+     -e MM_ADMIN=clement \
+     -e MM_EMAIL=myemail@gmail.com \
+     -e MM_VHOST=wiki.example.org \
+     clement89/moinmoin-wiki
 ``` 
 
 
