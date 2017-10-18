@@ -47,14 +47,16 @@ sudo docker run -it -p 80:80 \
      -e MMUSER=1001 \
      clement89/moinmoin-wiki
 ``` 
-* Override any default environment variables
+* Override any default environment variables and use customized wikiconfig.py if required
 ```
 sudo docker run -it -p 80:80 \
      -v /opt/wiki/pages:/usr/local/share/moin/data/pages \
+     -v /moinmoin-wiki/wikiconfig_customized.py:/usr/local/share/moin/wikiconfig.py \
      -e MMUSER=1001 \
      -e MM_ADMIN=clement \
      -e MM_EMAIL=myemail@gmail.com \
      -e MM_VHOST=wiki.example.org \
+     -e MM_PASSWD=testpasswdchangeme \
      clement89/moinmoin-wiki
 ``` 
 
