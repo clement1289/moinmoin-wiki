@@ -91,7 +91,7 @@ class Config(multiconfig.DefaultConfig):
 
     # This is checked by some rather critical and potentially harmful actions,
     # like despam or PackageInstaller action:
-    superuser = [u"mmAdmin", ]
+    superuser = [u"MM_ADMIN", ]
 
     # IMPORTANT: grant yourself admin rights! replace YourName with
     # your user name. See HelpOnAccessControlLists for more help.

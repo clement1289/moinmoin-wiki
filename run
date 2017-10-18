@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# create user if doesn't exist
+CURR_UID=$(id -u moinmoin 2> /dev/null)
+if [ -z "${CURR_UID}" ]; then
+    useradd -u ${MM_UID} moinmoin
+elif [[ "${CURR_UID}" != ${MM_UID} ]]; then
+    usermod -u ${MM_UID} moinmoin
+fi
+
+# set permissions
+chown -Rh ${MM_UID} /usr/local/share/moin/
+
+# Update configurations files as per environment variables
+sed -i "s/MM_ADMIN/${MM_ADMIN}/g" /usr/local/share/moin/wikiconfig.py
+sed -i "s/MM_VHOST/${MM_VHOST}/g" /etc/nginx/sites-available/moinmoin.conf
+
+
+# set password for MM_ADMIN
+if [ -z "${MM_PASSWD}" ]; then
+    MM_PASSWD=$(tr -dc _A-Z-a-z-0-9 < /dev/urandom| head -c15)
+fi
+echo "Setting ${MM_ADMIN} password to ${MM_PASSWD}"
+su moinmoin -c "/usr/local/bin/moin --config-dir /usr/local/share/moin account create --name ${MM_ADMIN} --email ${MM_EMAIL} --password ${MM_PASSWD}"
+
+# start service
+service nginx start && \
+  uwsgi --uid ${MM_UID} \
+    -s /tmp/uwsgi.sock \
+    --plugins python \
+    --pidfile /var/run/uwsgi-moinmoin.pid \
+    --wsgi-file server/moin.wsgi \
+    -M -p 4 \
+    --chdir /usr/local/share/moin \
+    --python-path /usr/local/share/moin \
+    --harakiri 30 \
+    --die-on-term
